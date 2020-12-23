@@ -1,8 +1,9 @@
 <template>
   <DynamicScroller
     :items="items"
-    :min-item-size="54"
+    :min-item-size="50"
     class="scroller"
+    page-mode
   >
     <template v-slot="{ item, index, active }">
       <DynamicScrollerItem
@@ -26,7 +27,7 @@
               {{ item.account }}
             </div>
             <div class="row__cell">
-              {{ money(item.amount) }}
+              <small>USD</small> {{ money(item.amount) }}
             </div>
         </div>
         <div v-if="item.expanded" class="children">
@@ -41,7 +42,7 @@
               {{ child.account }}
             </div>
             <div class="row__cell">
-              {{ money(child.amount) }}
+              <small>USD</small> {{ money(child.amount) }}
             </div>
           </div>
         </div>
@@ -58,29 +59,40 @@ export default {
   },
   methods: {
     money(amount) {
-      return new Intl.NumberFormat().format(amount)
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount)
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style lang="scss">
   .scroller {
     height: 100%;
-    .vue-recycle-scroller__item-wrapper :nth-child(even) .row {
-      background: #EFEFEF;
-    }
+  }
+  .children {
+    max-height: 200px;
+    overflow-y: auto;
   }
   .row {
     display: flex;
     flex-wrap: wrap;
     cursor: pointer;
     padding: 10px 5px;
-    border-bottom: 1px solid black;
+    border-top: 1px solid #000;
+    border-collapse: collapse;
+    background: #FFFFFF;
+
+    .hover & {
+      background: rgba(#00b3e0, 0.10);
+    }
 
     .children & {
-      background: #FFFFFF!important;
+      background: #EFEFEF;
+      border-top: 1px solid #CCC;
+      &:hover {
+        background: rgba(#00b3e0, 0.10);
+      }
     }
 
     &__cell {

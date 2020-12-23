@@ -1,6 +1,20 @@
 <template>
-<div id="#app">
-  <Main :items="items"></Main>
+<div id="app">
+    <div class="row" style="background: #AAA">
+      <div class="row__cell"></div>
+      <div class="row__cell">
+        <b>Payee</b>
+      </div>
+      <div class="row__cell">
+        <b>Payment ID</b>
+      </div>
+      <div class="row__cell">
+        <b>Amount</b>
+      </div>
+    </div>
+  <div class="wrapper">
+    <Main :items="items"></Main>
+  </div>
 </div>
 </template>
 
@@ -52,6 +66,9 @@ export default {
 *, *::before, *::after {
   box-sizing: border-box;
 }
+html {
+  scroll-behavior: smooth;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -59,5 +76,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.wrapper {
+  max-height: 500px;
+  overflow-y: auto;
 }
 </style>
